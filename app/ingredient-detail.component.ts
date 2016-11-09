@@ -7,7 +7,7 @@ import { Ingredient } from './ingredient';
 @Component({
   moduleId: module.id,
   selector: 'my-ingredient-detail',
-  templateUrl: 'ingredient-detail.component.html' 
+  templateUrl: 'ingredient-detail.component.html'
 
 })
 
