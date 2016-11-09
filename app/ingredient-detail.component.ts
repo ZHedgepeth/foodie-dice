@@ -32,4 +32,9 @@ export class IngredientDetailComponent implements OnInit{
   goBack(): void {
     this.location.back();
   }
+
+  save(): void {
+    this.ingredientService.update(this.ingredient)
+    .then(() => this.goBack());
+  }
 }
