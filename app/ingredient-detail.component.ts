@@ -1,23 +1,35 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
+import { IngredientService } from './ingredient.service';
 import { Ingredient } from './ingredient';
 
 @Component({
+  moduleId: module.id,
   selector: 'my-ingredient-detail',
-  template: `
-  <div *ngIf="ingredient">
-    <h2>{{ingredient.name}} details!</h2>
-    <div><label>id: </label>{{ingredient.id}}</div>
-    <div>
-      <label>name: </label>
-      <input [(ngModel)]="ingredient.name" placeholder="name"/>
-    </div>
-  </div>
-`
+  templateUrl: 'ingredient-detail.component.html' 
 
 })
 
-export class IngredientDetailComponent {
+export class IngredientDetailComponent implements OnInit{
 
   @Input() ingredient: Ingredient;
 
+  constructor(
+    private ingredientService: IngredientService,
+    private route: ActivatedRoute,
+    private location: Location
+  ) {}
+
+  ngOnInit(): void {
+    this.route.params.forEach((params: Params) => {
+      let id = +params['id'];
+      this.ingredientService.getIngredient(id)
+        .then(ingredient => this.ingredient = ingredient);
+    });
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
 }

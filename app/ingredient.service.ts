@@ -12,4 +12,8 @@ export class IngredientService {
     return new Promise<Ingredient[]>(resolve => setTimeout(resolve, 1000))
     .then(() => this.getIngredients());
   }
+  getIngredient(id: number): Promise<Ingredient> {
+    return this.getIngredients()
+      .then(ingredients => ingredients.find(ingredient => ingredient.id === id));
+  }
 }
