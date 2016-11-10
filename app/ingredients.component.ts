@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router }  from '@angular/router';
+
 import { Ingredient } from './ingredient';
 import { IngredientService } from './ingredient.service';
-import { Router }  from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -15,11 +16,13 @@ export class IngredientsComponent implements OnInit {
   selectedIngredient: Ingredient;
 
   constructor(
-    private router: Router,
-    private ingredientService: IngredientService) {}
+    private ingredientService: IngredientService,
+    private router: Router) {}
 
   getIngredients(): void {
-    this.ingredientService.getIngredients().then(ingredients => this.ingredients = ingredients);
+    this.ingredientService
+      .getIngredients()
+      .then(ingredients => this.ingredients = ingredients);
   }
 
   ngOnInit(): void {
@@ -49,7 +52,7 @@ export class IngredientsComponent implements OnInit {
     this.ingredientService
       .delete(ingredient.id)
       .then(() => {
-        this.ingredient = this.ingredients.filter(i => i !== ingredient);
+        this.ingredients = this.ingredients.filter(i => i !== ingredient);
         if(this.selectedIngredient === ingredient) { this.selectedIngredient = null; }
       });
   }

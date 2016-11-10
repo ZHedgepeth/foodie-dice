@@ -7,7 +7,7 @@ import { Ingredient } from './ingredient';
 @Injectable()
 export class IngredientSearchService {
 
-  constructo(private http: Http) {}
+  constructor(private http: Http) {}
 
   search(term: string): Observable<Ingredient[]> {
     return this.http

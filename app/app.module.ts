@@ -1,9 +1,9 @@
+import './rxjs-extensions';
+
 import { NgModule }                   from '@angular/core';
 import { BrowserModule }              from '@angular/platform-browser';
 import { FormsModule }                from '@angular/forms';
 import { HttpModule }                 from '@angular/http';
-
-import { AppRoutingModule }           from './app-routing.module';
 
 //This is something that will trick the HTTP client ontp fetching and asving data from a mock service, make adjustments here when we work with an actual database
 
@@ -17,6 +17,10 @@ import { DashboardComponent }         from './dashboard.component';
 import { IngredientsComponent }       from './ingredients.component';
 import { IngredientDetailComponent }  from './ingredient-detail.component';
 import { IngredientService }          from './ingredient.service';
+import { IngredientSearchComponent }  from './ingredient-search.component';
+
+import { AppRoutingModule }           from './app-routing.module';
+
 
 @NgModule({
   imports: [
@@ -30,7 +34,8 @@ import { IngredientService }          from './ingredient.service';
     AppComponent,
     DashboardComponent,
     IngredientDetailComponent,
-    IngredientsComponent
+    IngredientsComponent,
+    IngredientSearchComponent
   ],
   providers: [
     IngredientService

@@ -1,8 +1,14 @@
 <h2>My Ingredient List</h2>
+<div>
+  <label>Ingredient name:</label> <input #ingredientName />
+  <button (click)="add(ingredientName.value); ingredientName.value=''">
+    Add
+  </button>
+</div>
 <ul class="ingredients">
   <li *ngFor="let ingredient of ingredients"
-    [class.selected]="ingredient === selectedIngredient"
-    (click)="onSelect(ingredient)">
+    (click)="onSelect(ingredient)"
+      [class.selected]="ingredient === selectedIngredient">
     <span class="badge">{{ingredient.id}}</span>
     <span>{{ingredient.name}}</span>
     <button class="delete" (click)="delete(ingredient); $event.stopPropagation()">X</button>
@@ -13,11 +19,4 @@
     {{selectedIngredient.name | uppercase}} tastes great!
   </h2>
   <button (click)="gotoDetail()">View Details</button>
-</div>
-<div>
-  <h5>Add a new ingredient!</h5>
-  <label>Ingredient name:</label> <input #ingredientName />
-  <button (click)="add(ingredientName.value); ingredientName.value=''">
-    Add
-  </button>
 </div>

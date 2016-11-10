@@ -1,19 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
-import { IngredientService } from './ingredient.service';
+
 import { Ingredient } from './ingredient';
+import { IngredientService } from './ingredient.service';
 
 @Component({
   moduleId: module.id,
   selector: 'my-ingredient-detail',
-  templateUrl: 'ingredient-detail.component.html'
-
+  templateUrl: 'ingredient-detail.component.html',
+  styleUrls: [ 'ingredient-detail.component.css' ]
 })
 
 export class IngredientDetailComponent implements OnInit{
-
-  @Input() ingredient: Ingredient;
+  ingredient: Ingredient;
 
   constructor(
     private ingredientService: IngredientService,
@@ -29,12 +29,12 @@ export class IngredientDetailComponent implements OnInit{
     });
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
   save(): void {
     this.ingredientService.update(this.ingredient)
     .then(() => this.goBack());
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

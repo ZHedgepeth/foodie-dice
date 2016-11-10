@@ -17,22 +17,14 @@ export class IngredientSearchComponent implements OnInit {
   ingredients: Observable<Ingredient[]>;
   private searchTerms = new Subject<string>();
 
-  //Push a search term into the observable stream.
-  search(term: string): void {
-    this.searchTerms.next(term);
-  }
-
   constructor(
     private ingredientSearchService: IngredientSearchService,
     private router: Router) {}
 
-  //Push a search term into the observable stream.
-  search(term: string): void {
-    this.searchTerms.next(term);
-  }
-
-  ingredients: Observable<Ingredient[]>;
-
+    //Push a search term into the observable stream.
+    search(term: string): void {
+      this.searchTerms.next(term);
+    }
   ngOnInit(): void {
     this.ingredients = this.searchTerms
       .debounceTime(300) //wait for 300ms pause in events
