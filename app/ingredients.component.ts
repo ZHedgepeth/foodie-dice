@@ -34,4 +34,23 @@ export class IngredientsComponent implements OnInit {
     this.router.navigate(['/detail',
   this.selectedIngredient.id]);
   }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.ingredientService.create(name)
+      .then(ingredient => {
+        this.ingredients.push(ingredient);
+        this.selectedIngredient = null;
+      })
+  }
+
+  delete(ingredient: Ingredient): void {
+    this.ingredientService
+      .delete(ingredient.id)
+      .then(() => {
+        this.ingredient = this.ingredients.filter(i => i !== ingredient);
+        if(this.selectedIngredient === ingredient) { this.selectedIngredient = null; }
+      });
+  }
 }

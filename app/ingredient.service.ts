@@ -22,6 +22,23 @@ export class IngredientService {
       .catch(this.handleError);
   }
 
+  create(name: string): Promise<Ingredient> {
+    return this.http
+      .post(this.ingredientsUrl, JSON.stringify({name: name}),
+    {headers: this.headers})
+      .toPromise()
+      .then(res => res.json().data)
+      .catch(this.handleError);
+  }
+
+  delete(id: number): Promise<void> {
+    const url = `${this.ingredientsUrl}/${id}`;
+    return this.http.delete(url, {headers: this.headers})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
+
   private ingredientsUrl = 'app/ingredients'; //URL to web API
 
   constructor(private http: Http) { }
