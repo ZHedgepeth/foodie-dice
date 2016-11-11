@@ -18,6 +18,14 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.ingredientService.getIngredients()
-    .then(ingredients => this.ingredients = ingredients.slice(1, 5));
+    .then(ingredients => this.ingredients = ingredients.slice(0, 8));
+
+    console.log((this.ingredients.slice(0, 8));
   }
+
+  //  diceArray: ingredients[] = [];
+   //
+  //  ngOnInit(): void {
+  //    this.ingredientService.getIngredients
+  //  }
 }

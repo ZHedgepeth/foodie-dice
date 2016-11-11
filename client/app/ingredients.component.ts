@@ -25,25 +25,6 @@ export class IngredientsComponent implements OnInit {
       .then(ingredients => this.ingredients = ingredients);
   }
 
-  add(name: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    this.ingredientService.create(name)
-      .then(ingredient => {
-        this.ingredients.push(ingredient);
-        this.selectedIngredient = null;
-      });
-  }
-
-  delete(ingredient: Ingredient): void {
-    this.ingredientService
-      .delete(ingredient.id)
-      .then(() => {
-        this.ingredients = this.ingredients.filter(i => i !== ingredient);
-        if(this.selectedIngredient === ingredient) { this.selectedIngredient = null; }
-      });
-  }
-
   ngOnInit(): void {
     this.getIngredients();
   }
@@ -57,4 +38,22 @@ export class IngredientsComponent implements OnInit {
   this.selectedIngredient.id]);
   }
 
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.ingredientService.create(name)
+      .then(ingredient => {
+        this.ingredients.push(ingredient);
+        this.selectedIngredient = null;
+      })
+  }
+
+  delete(ingredient: Ingredient): void {
+    this.ingredientService
+      .delete(ingredient.id)
+      .then(() => {
+        this.ingredients = this.ingredients.filter(i => i !== ingredient);
+        if(this.selectedIngredient === ingredient) { this.selectedIngredient = null; }
+      });
+  }
 }

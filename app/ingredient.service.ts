@@ -11,6 +11,38 @@ export class IngredientService {
 
   private headers = new Headers({'Content-Type':
   'application/json'});
+  private ingredientsUrl = 'app/ingredients'; //URL to web API
+
+  constructor(private http: Http) { }
+
+  getIngredients(): Promise<Ingredient[]> {
+    return this.http.get(this.ingredientsUrl)
+    .toPromise()
+    .then(response => response.json().data as Ingredient[])
+    .catch(this.handleError);
+  }
+
+  getIngredient(id: number): Promise<Ingredient> {
+    return this.getIngredients()
+      .then(ingredients => ingredients.find(ingredient => ingredient.id === id));
+  }
+
+  delete(id: number): Promise<void> {
+    const url = `${this.ingredientsUrl}/${id}`;
+    return this.http.delete(url, {headers: this.headers})
+    .toPromise()
+    .then(() => null)
+    .catch(this.handleError);
+  }
+
+  create(name: string): Promise<Ingredient> {
+    return this.http
+      .post(this.ingredientsUrl, JSON.stringify({name: name}),
+      {headers: this.headers})
+      .toPromise()
+      .then(res => res.json().data)
+      .catch(this.handleError);
+  }
 
   update(ingredient: Ingredient): Promise<Ingredient> {
     const url = `${this.ingredientsUrl}/${ingredient.id}`;
@@ -20,44 +52,6 @@ export class IngredientService {
       .toPromise()
       .then(() => ingredient)
       .catch(this.handleError);
-  }
-
-  create(name: string): Promise<Ingredient> {
-    return this.http
-      .post(this.ingredientsUrl, JSON.stringify({name: name}),
-    {headers: this.headers})
-      .toPromise()
-      .then(res => res.json().data)
-      .catch(this.handleError);
-  }
-
-  delete(id: number): Promise<void> {
-    const url = `${this.ingredientsUrl}/${id}`;
-    return this.http.delete(url, {headers: this.headers})
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
-  }
-
-  private ingredientsUrl = 'app/ingredients'; //URL to web API
-
-  constructor(private http: Http) { }
-
-  getIngredients(): Promise<Ingredient[]> {
-    return this.http.get(this.ingredientsUrl)
-               .toPromise()
-               .then(response => response.json().data as Ingredient[])
-               .catch(this.handleError);
-  }
-
-
-  getIngredientsSlowly(): Promise<Ingredient[]> {
-    return new Promise<Ingredient[]>(resolve => setTimeout(resolve, 1000))
-    .then(() => this.getIngredients());
-  }
-  getIngredient(id: number): Promise<Ingredient> {
-    return this.getIngredients()
-      .then(ingredients => ingredients.find(ingredient => ingredient.id === id));
   }
 
   private handleError(error: any): Promise<any> {
